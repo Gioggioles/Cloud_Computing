@@ -1,0 +1,8 @@
+The period output Zzzz.... is executed only when the count is greater than 100000, because even if the uart_send_string() function is blocking, the output would be too fast if we removed the 'if clause'. 
+
+If we removed the period output Zzzz.... the second while doesn't have instruction, so become an infinite loop that wait for a character, then the character will be printed and the loop starts again.
+
+How can you verify in C that the stack is working properly? Push an element and then pop it, if the result is the element that we have push before the stack is working properly
+
+
+What would happen if we were to call to many functions in C? The Program stack will be full, so if we added others functions, the space won't be sufficient and the overflow will be detected.
