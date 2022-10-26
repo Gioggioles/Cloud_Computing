@@ -14,4 +14,4 @@ In a third window I run the command "telnet localhost 4321", this window will be
 In order to print byte values representing the encodingu of the typed characters on the keyboard, I modify the function kvprintf, adding the function kputchar -> static void kputchar(int c){  
                                                         uart_send(UART0, c);   //Print a single character
                                                    }
-When I hit the regular characters and other special characters (delete, backspace, ecc...) the result is the ASCII code of that character. If instead I hit the arrows, the result is different, it returns three different number where the last one is the correct ASCII value of the arrow.
+When I hit the regular characters and other special characters (delete, backspace, ecc...) the result is the ASCII code of that character. If instead I hit the arrows, the result is different, it returns three different number where the first one is the ASCII value of the left arrow, the second one is the value of '[' and the last one is different for the 4 arrows, this last value is between 65-68.
