@@ -1,17 +1,22 @@
-The period output Zzzz.... is executed only when the count is greater than 100000, because even if the uart_send_string() function is blocking, the output would be too fast if we removed the 'if clause'. 
+Week1.step1:
+- VAP has 1MB of memory and VPB 32MB, they have two differents processors: arm926 (VAP) and cortex-a8 (VPB)
+- The bss 16-byte alignment comes from how the assembly was written in reset.s to zero the bss section, because   the assembly write 4 registers at a time, each of 32bits, so 4*4-Bytes = 16 bytes. 
 
-If we removed the period output Zzzz.... the second while doesn't have instruction, so become an infinite loop that wait for a character, then the character will be printed and the loop starts again.
+Week1.step2:
+- The period output Zzzz.... is executed only when the count is greater than 100000, because even if the           uart_send_string() function is blocking, the output would be too fast if we removed the 'if clause'. 
+  If we removed the period output Zzzz.... the second while doesn't have instruction, so become an infinite loop   that wait for a character, then the character will be printed and the loop starts again. 
+- Push an element and then pop it, if the result is the element that we have push before the stack is working     properly
+- The Program stack will be full, so if we added others functions, the space won't be sufficient and the           overflow will be detected.
 
-How can you verify in C that the stack is working properly? Push an element and then pop it, if the result is the element that we have push before the stack is working properly
-
-
-What would happen if we were to call to many functions in C? The Program stack will be full, so if we added others functions, the space won't be sufficient and the overflow will be detected.
-
-To emulate a second serial line I add a new QEMU machine with this new parameter: QEMU_SERIAL2=-serial mon:telnet::4321,server=on,wait=off
-
-This new machine can be debugged at port 1235 and the telnet port is 4321.
-In a third window I run the command "telnet localhost 4321", this window will be the output of my application.
-In order to print byte values representing the encodingu of the typed characters on the keyboard, I modify the function kvprintf, adding the function kputchar -> static void kputchar(int c){  
-                                                        uart_send(UART0, c);   //Print a single character
+Week1.step3:
+- To emulate a second serial line I add a new QEMU machine with this new parameter: QEMU_SERIAL2=-serial
+  mon:telnet::4321,server=on,wait=off
+- This new machine can be debugged at port 1235 and the telnet port is 4321.
+  In a third window I run the command "telnet localhost 4321", this window will be the output of my application.
+  In order to print byte values representing the encoding of the typed characters on the keyboard, I modify the   function kvprintf, adding the function kputchar -> static void kputchar(int c){  
+                                                        uart_send(UART1, c);   //Print a single character
                                                    }
-When I hit the regular characters and other special characters (delete, backspace, ecc...) the result is the ASCII code of that character. If instead I hit the arrows, the result is different, it returns three different number where the first one is the ASCII value of the left arrow, the second one is the value of '[' and the last one is different for the 4 arrows, this last value is between 65-68.
+                                                 
+- When I hit the regular characters and other special characters (delete, backspace, ecc...) the result is the     ASCII code of that character. If instead I hit the arrows, the result is different, it returns three 
+  different number where the first one is the ASCII value of the left arrow, the second one is the value of 
+  '[' and the last  one is different for the 4 arrows, this last value is between 65-68.                                                 
