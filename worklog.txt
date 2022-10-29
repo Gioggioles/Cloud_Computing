@@ -13,7 +13,7 @@ Week1.step2:
 
 Week1.step3:
 - To emulate a second serial line I add a new QEMU machine with this new parameter: QEMU_SERIAL2=-serial mon:telnet::4321,server=on,wait=off
-- This new machine can be debugged at port 1235 and the telnet port is 4321.
+- This new machine can be debugged at port 1234 and the telnet port is 4321.
   In a third window I run the command "telnet localhost 4321", this window will be the output of my application.
   In order to print byte values representing the encoding of the typed characters on the keyboard, I modify the function kvprintf, adding the function
   putchar -> static void kputchar(int c){  
