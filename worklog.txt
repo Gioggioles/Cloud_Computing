@@ -24,3 +24,15 @@ Week1.step3:
 - When I hit the regular characters and other special characters (delete, backspace, ecc...) the result is the ASCII code of that character. If instead I
   hit the arrows, the result is different, it returns three different number where the first one is the ASCII value of the left arrow, the second one is
   the value of '[' and the last  one is different for the 4 arrows, this last value is between 65-68.                                                 
+
+
+Week1.step4
+- Using the QEMU_SERIAL2 configuation, I tried to emulate a shell.
+ In particular: - use a while ( 1 == uart_receive(UART0, &c)), differently from the previous one, it work every time a chacter is hitten.
+                - if we write "reset" all the lines of the shell will be deleted
+                - if we wite echo and then a word, the word will be printed in the next line
+                - before press return, we can also modify the line: delete the characters, move right and move left.
+                - every time we hit return, we save in a matrix the printed line. Thanks to this matrix, we can use the up and down arrow to dispaly the 
+                  last 20 lines entered.
+
+
