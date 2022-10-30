@@ -10,6 +10,7 @@ Week1.step2:
   character will be printed and the loop starts again. 
 - Push an element and then pop it, if the result is the element that we have push before the stack is working properly
 - The Program stack will be full, so if we added others functions, the space won't be sufficient and the overflow will be detected.
+- The C program can be executed more safely if we use a MMU, because it is safe respect to overflow, reduce the difficulty to grow/shrink. In general, it's   impossible to be sure that the program is safe, because overflow and halt can happen.
 
 Week1.step3:
 - To emulate a second serial line I add a new QEMU machine with this new parameter: QEMU_SERIAL2=-serial mon:telnet::4321,server=on,wait=off
