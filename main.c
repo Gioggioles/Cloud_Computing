@@ -16,8 +16,7 @@ int strcmp(const char* s1, const char* s2)
 
 void _start() {
   int i = 0;
-  int count = 0;
-  /*int orizontal = 0;
+  int orizontal = 0;
   int vertical = 0;
   int r;
   int rows_number = 0;
@@ -25,9 +24,9 @@ void _start() {
   char line[100];
   char command[5] ;
   char rimanente[100];
-  char history[20][100];*/
+  char history[20][100];
 
-  while (1) {
+  /*while (1) {
     unsigned char c;
     while (0 == uart_receive(UART0, &c)) {
     
@@ -49,8 +48,8 @@ void _start() {
        
     
     }	
-  }
-  /*while (1) {
+  }*/
+  while (1) {
     unsigned char c;
     while ( 1 == uart_receive(UART0, &c)){
     if (c == 13)
@@ -86,7 +85,6 @@ void _start() {
 
      }
      uart_send_string(UART0, "\n\r");
-     //caricamento della linea sul buffer di operazione
      for (r=0; r<=i; r++)
      	history[history_number % 20][r] = line[r];  
      
@@ -186,9 +184,5 @@ void _start() {
 
     }
 }
-}*/
+}
 
-
-
-
-// \r permette di tornare all'inizio della riga
