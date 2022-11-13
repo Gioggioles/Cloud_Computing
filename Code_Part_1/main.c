@@ -71,7 +71,8 @@ void _start() {
 
      if(strcmp("reset", line) == 0){
          for(r=0; r<=rows_number; r++){
-         	kprintf( "\033[2K\r");
+         	kprintf( "\033[2K\r"); 
+          
          	kprintf("\33[1A");
          }
          
