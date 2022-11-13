@@ -1,5 +1,7 @@
 #include "main.h"
 
+
+
 /**
  * This is the C entry point, upcalled once the hardware has been setup properly
  * in assembly language, see the reset.s file.
@@ -16,7 +18,9 @@ int strcmp(const char* s1, const char* s2)
 
 void _start() {
   int i = 0;
-  int orizontal = 0;
+  struct cb *cb;
+  void* cookie;
+  /*int orizontal = 0;
   int vertical = 0;
   int r;
   int rows_number = 0;
@@ -24,32 +28,30 @@ void _start() {
   char line[100];
   char command[5] ;
   char rimanente[100];
-  char history[20][100];
-
-  /*while (1) {
-    unsigned char c;
-    while (0 == uart_receive(UART0, &c)) {
-    
-      // friendly reminder that you are polling and therefore spinning...
-      // not good for the planet! But until we introduce interrupts,
-      // there is nothing you can do about it... except comment out
-      // this annoying code ;-)
-      
-      count++;
-      if (count > 10000000) {
-        //uart_send_string(UART0, "Zzz....");
-        count = 0;
-      }
-    } 
-    
-    if (c == '\r')
-    	uart_send(UART0, '\n');
-    kprintf("Il codice ASCII è: %d", c);
-       
-    
-    }	
-  }*/
+  char history[20][100];*/
+  
+  uint8_t c;
+  uart_init(UART0);
+  vic_setup();
+  cb_init(cb);
+  vic_enable();
+  vic_irq_enable(0,uart_rx_handler(&cb, cookie), cookie);
+  
   while (1) {
+  
+    while (!cb_empty(cb)){ //0 == uart_receive(UART0, &c     
+    cb_get(cb, &c);
+    if(c == 13) {
+        uart_send(UART0, '\r');
+        uart_send(UART0, '\n');
+      } else {
+        uart_send(UART0, c);
+      }
+   }  
+   wfi();
+ }	
+}
+  /*while (1) {
     unsigned char c;
     while ( 1 == uart_receive(UART0, &c)){
     if (c == 13)
@@ -71,7 +73,7 @@ void _start() {
 
      if(strcmp("reset", line) == 0){
          for(r=0; r<=rows_number; r++){
-         	kprintf( "\033[2K\r"); 
+         	kprintf( "\033[2K\r");
          	kprintf("\33[1A");
          }
          
@@ -85,6 +87,7 @@ void _start() {
 
      }
      uart_send_string(UART0, "\n\r");
+     //caricamento della linea sul buffer di operazione
      for (r=0; r<=i; r++)
      	history[history_number % 20][r] = line[r];  
      
@@ -184,5 +187,9 @@ void _start() {
 
     }
 }
-}
+}*/
 
+
+
+
+// \r permette di tornare all'inizio della riga
