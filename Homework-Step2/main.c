@@ -35,7 +35,7 @@ void _start() {
   vic_setup();
   cb_init(cb);
   vic_enable();
-  vic_irq_enable(0,uart_rx_handler(&cb, cookie), cookie);
+  vic_irq_enable(0,void (*uart_rx_handler)(void*), cookie);
   
   while (1) {
   

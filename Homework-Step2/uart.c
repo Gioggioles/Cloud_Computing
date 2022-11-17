@@ -44,7 +44,7 @@ void uart_init(int uart){
   *(uint16_t*) (uart + CUARTLCR_H) = lcr;
   }
   
-void uart_rx_handler(struct cb *cb, void* cookie){
+void uart_rx_handler(void* cookie){
   uint8_t c;
   uart_receive(UART0, &c);
   while(c){

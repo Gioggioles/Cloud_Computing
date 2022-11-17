@@ -1,3 +1,11 @@
+Introduction:
+Unfortunately, based on my previous studies (data science), I had some problems finishing the project in the best way. I state that I tried through the 
+lessons and advice of colleagues to find a solution, but both for the misunderstanding of some passages and for the unavailability of my colleagues I could 
+not complete as I would have liked.
+I hope I’ve used Github correctly, as it’s my first time using it on Linux
+
+
+
 Week1.step1:
 - VAP has 1MB of memory and VPB 32MB, they have two differents processors: arm926 (VAP) and cortex-a8 (VPB)
 - The bss 16-byte alignment comes from how the assembly was written in reset.s to zero the bss section, because the assembly write 4 registers at a time,
@@ -42,4 +50,7 @@ PART_2
 I had some problems with the files, I didn't know how to include the new files. In addition I hope I initialized irq_stack_top correctly (kernel.ld:46).
 Now I'm trying to enable the INTERRUPTS but I don't understand how to do it. Reading the slides and searching the documentation I don't know how to build
 the uart_rx_handler and how the _irq function (vector.s:49) work.
+
+I think I understand how the interrupts work and what the isr function do, however I don't know how to enable the device and vic interrupts, because I'm not
+able to write the correct handlers and pass it to the vic_irq_enable() function.
 
