@@ -1,0 +1,56 @@
+Introduction:
+Unfortunately, based on my previous studies (data science), I had some problems finishing the project in the best way. I state that I tried through the 
+lessons and advice of colleagues to find a solution, but both for the misunderstanding of some passages and for the unavailability of my colleagues I could 
+not complete as I would have liked.
+I hope I’ve used Github correctly, as it’s my first time using it on Linux
+
+
+
+Week1.step1:
+- VAP has 1MB of memory and VPB 32MB, they have two differents processors: arm926 (VAP) and cortex-a8 (VPB)
+- The bss 16-byte alignment comes from how the assembly was written in reset.s to zero the bss section, because the assembly write 4 registers at a time,
+  each of 32bits, so 4*4-Bytes = 16 bytes. 
+
+Week1.step2:
+- The period output Zzzz.... is executed only when the count is greater than 100000, because even if the  uart_send_string() function is blocking, the
+  output would be too fast if we removed the 'if clause'. 
+  If we removed the period output Zzzz.... the second while doesn't have instruction, so become an infinite loop that wait for a character, then the
+  character will be printed and the loop starts again. 
+- Push an element and then pop it, if the result is the element that we have push before the stack is working properly
+- The Program stack will be full, so if we added others functions, the space won't be sufficient and the overflow will be detected.
+- The C program can be executed more safely if we use a MMU, because it is safe respect to overflow, reduce the difficulty to grow/shrink. In general, it's   
+  impossible to be sure that the program is safe, because overflow and halt can happen.
+
+Week1.step3:
+- To emulate a second serial line I add a new QEMU machine with this new parameter: QEMU_SERIAL2=-serial mon:telnet::4321,server=on,wait=off
+- This new machine can be debugged at port 1234 and the telnet port is 4321.
+  In a third window I run the command "telnet localhost 4321", this window will be the output of my application.
+  In order to print byte values representing the encoding of the typed characters on the keyboard, I modify the function kvprintf, adding the function
+  putchar -> static void kputchar(int c){  
+                                          uart_send(UART1, c);   //Print a single character
+                                        }
+                                                 
+- When I hit the regular characters and other special characters (delete, backspace, ecc...) the result is the ASCII code of that character. If instead I
+  hit the arrows, the result is different, it returns three different number where the first one is the ASCII value of the left arrow, the second one is
+  the value of '[' and the last  one is different for the 4 arrows, this last value is between 65-68.                                                 
+
+
+Week1.step4
+- Using the QEMU_SERIAL2 configuation, I tried to emulate a shell.
+ In particular: - use a while ( 1 == uart_receive(UART0, &c)), differently from the previous one, it work every time a chacter is hitten.
+                - if we write "reset" all the lines of the shell will be deleted
+                - if we wite echo and then a word, the word will be printed in the next line
+                - before press return, we can also modify the line: delete the characters, move right and move left.
+                - every time we hit return, we save in a matrix the printed line. Thanks to this matrix, we can use the up and down arrow to dispaly the 
+                  last 20 lines entered.
+
+
+
+PART_2
+I had some problems with the files, I didn't know how to include the new files. In addition I hope I initialized irq_stack_top correctly (kernel.ld:46).
+Now I'm trying to enable the INTERRUPTS but I don't understand how to do it. Reading the slides and searching the documentation I don't know how to build
+the uart_rx_handler and how the _irq function (vector.s:49) work.
+
+I think I understand how the interrupts work and what the isr function do, however I don't know how to enable the device and vic interrupts, because I'm not
+able to write the correct handlers and pass it to the vic_irq_enable() function.
+
